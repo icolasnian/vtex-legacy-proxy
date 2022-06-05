@@ -1,0 +1,24 @@
+.popupContainer {
+    background-color: #282a36;
+    min-height: 550px;
+    width: 450px;
+    min-width: 450px;
+    padding: 25px;
+}
+
+.is-hidden {
+    display: none;
+}
+
+body {
+    &::-webkit-scrollbar { 
+        background-color: #282a36;
+        width: 1px;
+          /* Safari and Chrome */   
+    }
+}
+
+
+
+
+

@@ -1,0 +1,122 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-plusplus */
+/* eslint-disable func-names */
+import {IRule, IStore} from './components/StoresContextProvider';
+
+interface IProxy {
+  rules: IRule[];
+  filterStores: (stores: IStore[]) => void;
+  filterRules: (stores: IStore[]) => void;
+  killListener: () => void;
+  initListener: () => void;
+  intercept: (
+    details: chrome.webRequest.WebRequestBodyDetails
+  ) => {redirectUrl: string} | undefined;
+  enableIcon: (tabId: number) => void;
+}
+
+type Intercept = {redirectUrl: unknown};
+
+const SUCCESSFUL_REQUEST = 200;
+
+const proxy: IProxy = {
+  rules: [],
+  filterStores(stores) {
+    if (stores.length === 0) {
+      proxy.killListener();
+      return;
+    }
+
+    const filteredStores = stores.filter(
+      (store) => store.active && store.rules.length > 0
+    );
+
+    if (filteredStores.length === 0) {
+      proxy.killListener();
+      return;
+    }
+
+    proxy.filterRules(filteredStores);
+  },
+
+  filterRules(filteredStores): void {
+    proxy.rules = []; // otherwise overlaps rules
+
+    for (let i = 0; i < filteredStores.length; i++) {
+      const {rules} = filteredStores[i];
+
+      for (let j = 0; j < rules.length; j++) {
+        const isActiveRule = rules[j].active;
+
+        if (isActiveRule) {
+          proxy.rules.push(rules[j]);
+        }
+      }
+    }
+
+    if (proxy.rules.length > 0) {
+      proxy.initListener();
+    } else {
+      proxy.killListener();
+    }
+  },
+
+  killListener(): void {
+    proxy.rules = [];
+    chrome.webRequest.onBeforeRequest.removeListener(
+      proxy.intercept as (
+        details: chrome.webRequest.WebRequestBodyDetails
+      ) => void | chrome.webRequest.BlockingResponse
+    );
+  },
+
+  enableIcon(tabId): void {
+    chrome.browserAction.setIcon({tabId, path: 'assets/icons/16-color.png'});
+  },
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- chrome methods expects different types for the same function
+  intercept(details: chrome.webRequest.WebRequestBodyDetails): any {
+    const {tabId} = details;
+    for (let i = 0; i < proxy.rules.length; i++) {
+      const matchedRule = details.url.includes(proxy.rules[i].urlFrom);
+
+      if (matchedRule) {
+        fetch(proxy.rules[i].urlTo)
+          .then((promise): Promise<unknown> | undefined | Intercept => {
+            if (promise.status === SUCCESSFUL_REQUEST) {
+              proxy.enableIcon(tabId);
+              return {redirectUrl: proxy.rules[i].urlTo};
+            }
+          })
+          .catch((err) => proxy.killListener());
+      }
+    }
+  },
+
+  initListener() {
+    chrome.webRequest.onBeforeRequest.addListener(
+      proxy.intercept as (
+        details: chrome.webRequest.WebRequestBodyDetails
+      ) => void | chrome.webRequest.BlockingResponse,
+      {
+        urls: ['<all_urls>'],
+        types: ['main_frame', 'script', 'stylesheet'],
+      },
+      ['blocking']
+    );
+  },
+};
+
+chrome.storage.local.get('stores', function (result) {
+  const stores = JSON.parse(result.stores);
+  if (stores) {
+    proxy.filterStores(stores);
+  }
+});
+
+chrome.storage.onChanged.addListener(function (changes) {
+  const stores = JSON.parse(changes.stores.newValue);
+  if (stores) {
+    proxy.filterStores(stores);
+  }
+});

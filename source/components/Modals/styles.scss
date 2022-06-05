@@ -1,0 +1,99 @@
+.modal {
+    width: 300px;
+    min-height: 300px;
+    background-color: #282a36;
+    padding: 25px;
+    border-radius: 10px;
+    z-index: 999;
+    cursor: default;
+    &-title {
+        color: white;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #bd93f9;
+        text-align: center;
+    }
+
+    &-formContainer {
+        margin-top: 30px;
+        width: 100%;
+
+        &_form {
+            width: 100%;
+
+            &-inputContainer {
+                margin-bottom: 10px;
+                display: flex;
+                flex-direction: column;
+                &--label {
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    p {
+                        margin-right: 10px;
+                        color: white;
+
+                    }
+
+                    [role="presentation"] {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        img {
+                            margin: 0 !important;
+                            border: 0 !important;
+                            padding: 0 !important;
+                            filter: invert(27%) sepia(4%) saturate(2848%) hue-rotate(195deg) brightness(91%) contrast(86%);
+                        }
+                    }
+
+                    
+                }
+
+                .example {
+                    color:#747686;
+                    font-size: 12px;
+                    display: block;
+                    margin: 10px 0;
+                    word-break: break-word;
+                }
+
+                &--input {
+                    width: calc(100% - 20px);
+                    height: 30px;
+                    border-radius: 10px;
+                    padding: 0 10px;
+                    background-color: #44475a;
+                    color: darkGray;
+                    margin-top: 10px;
+                }
+            }
+
+            &-submitContainer {
+                margin-top: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &-submit {
+                    border: 0;
+                    outline: 0;
+                    padding: 10px;
+                    color: white;
+                    background-color: #bd93f9;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    display: flex;
+                    font-size: 16;
+                    align-items: center;
+                    justify-content: center;
+                    min-width: 200px;
+                    &:hover {
+                        background-color: #a269f3;
+                    }
+                }
+            }
+        }
+    }
+}

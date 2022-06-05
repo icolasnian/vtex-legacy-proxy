@@ -1,0 +1,56 @@
+.popupContainer-header {
+    border-bottom: 1px solid#44475a;
+    padding-bottom: 20px;
+    &--title {
+        font-size: 20px;
+        color: white;
+        text-align: center;
+        font-weight: normal;
+        font-style: normal;
+        &_pink {
+            margin-right: 5px;
+            color: hsl(342, 78%, 50%);
+        }
+    }
+    &--description {
+        margin-top: 5px;
+        line-height: 1.2;
+        &--text {
+            color: white;
+            font-size: 14px;
+            font-weight: 200;
+        }
+        &--enjoy_create {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &-enjoy {
+                font-weight: 400;
+                display: block;
+                color: white;
+            }
+            &-create {
+                border: 0;
+                outline: 0;
+                padding: 10px;
+                color: white;
+                background-color: #bd93f9;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &:hover {
+                    background-color: #a269f3;
+                }
+                p {
+                    margin-right: 5px;
+                }
+                img {
+                    filter: invert(1)
+                }
+            }
+        }
+    }
+}

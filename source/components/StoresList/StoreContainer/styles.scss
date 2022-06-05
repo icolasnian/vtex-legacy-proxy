@@ -1,0 +1,231 @@
+.popupContainer--storesList-storeContainer {
+
+    border-bottom: 1px solid#44475a;
+    user-select: none;
+    min-height: 50px;
+    transition: all .2s;
+
+    label {
+        border: none !important; // toggle component
+    }
+
+    &-storeTrigger {
+        min-height: 50px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+
+        &-vendor_toggle {
+            display: flex;
+            align-items: center;
+
+            &-vendor {
+                color: white;
+                margin-right: 10px;
+                max-width: 300px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    &-storeContent {
+        display: flex;
+        padding-bottom: 20px;
+
+        &-actions {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            justify-content: space-between;
+            padding-right: 5%;
+            border-right: 1px solid#44475a;
+            margin-right: 5%;
+
+            &--title {
+                color: #666876;
+                font-weight: 500;
+                font-size: 12px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid#44475a;
+            }
+
+            &--buttons {
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+
+                a {
+                    -webkit-appearance: button;
+                    -moz-appearance: button;
+                    appearance: button;
+                }
+
+                button,
+                a {
+                    border: 0;
+                    outline: 0;
+                    padding: 5px;
+                    color: white;
+                    background-color: #bd93f9;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    font-weight: 500;
+                    display: flex;
+                    font-style: normal;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: 20px;
+                    text-decoration: none;
+                    text-decoration-color: none !important;
+                    font-size: 14px;
+
+                    &:hover {
+                        background-color: #a269f3;
+                    }
+                }
+
+                &-admin {
+                    background-color: rgb(248, 45, 112) !important;
+
+                    &:hover {
+                        background-color: rgb(216, 61, 113) !important;
+                    }
+                }
+
+
+                &-removeStore {
+                    background-color: rgb(194, 36, 36) !important;
+
+                    &:hover {
+                        background-color: rgb(233, 44, 44) !important;
+                    }
+                }
+            }
+        }
+
+        &-rules {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+
+            &--title {
+                color: #666876;
+                font-weight: 500;
+                font-size: 12px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid#44475a;
+            }
+
+            &--rulesContainer {
+                display: flex;
+                flex-direction: column;
+                max-height: 180px;
+                overflow-y: scroll;
+                &::-webkit-scrollbar { 
+                    background-color: #23242c;
+                    width: 1px;
+                      /* Safari and Chrome */   
+                }
+
+                &-rule {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin: 10px 0;
+                    &-name_toggle {
+                        display: flex;
+                        align-items: center;
+                        p {
+                            color: white;
+                            margin-right: 10px;
+                            font-size: 12px;
+                            max-width: 120px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            width: 120px;
+                        }
+                    }
+
+                    &-icons {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        > button {
+                            margin-left: 10px;
+                            outline: 0;
+                            border: 0;
+                            background-color: transparent;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+
+                        }
+
+                        &-edit {
+                            margin-right: 10px;
+                            .edit {
+                                width: 20px;
+                                height: 20px;
+                            }
+                            &:hover {
+                                .edit {
+                
+                                    path {
+                                        
+                                        fill:  #a269f3;
+                                    }
+                                    
+                                }
+                            }
+                            
+                        }
+
+                        &-remove {
+                            .remove {
+                                width: 16px;
+                                height: 16px;
+                            }
+                            &:hover {
+                                .remove {
+                                    
+                                    path {
+                                        fill: #e92c2c !important;
+                                        stroke: #e92c2c !important;
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+.storeContainerOpen {
+    background-color: #23242c !important;
+    border-bottom: 1px solid#44475a;
+    user-select: none;
+    min-height: 50px;
+    padding: 0 20px;
+
+    .popupContainer--storesList-storeContainer-storeContent {
+        padding-bottom: 0 !important;
+    }
+
+    .arrowIcon {
+        transition: transform .2s;
+        transform: rotate(90deg);
+    }
+}
