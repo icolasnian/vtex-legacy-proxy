@@ -81,14 +81,8 @@ const proxy: IProxy = {
       const matchedRule = details.url.includes(proxy.rules[i].urlFrom);
 
       if (matchedRule) {
-        fetch(proxy.rules[i].urlTo)
-          .then((promise): Promise<unknown> | undefined | Intercept => {
-            if (promise.status === SUCCESSFUL_REQUEST) {
-              proxy.enableIcon(tabId);
-              return {redirectUrl: proxy.rules[i].urlTo};
-            }
-          })
-          .catch((err) => proxy.killListener());
+        proxy.enableIcon(tabId);
+        return {redirectUrl: proxy.rules[i].urlTo};
       }
     }
   },
