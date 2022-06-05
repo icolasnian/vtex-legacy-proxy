@@ -46,6 +46,10 @@ const StoreContainer: FC<IStoreContainer> = ({
     setShowUpdateStoreModal(true);
   };
 
+  const handleAdmin = (): void => {
+    chrome.tabs.create({url: admin});
+  };
+
   return (
     <div
       className={
@@ -80,13 +84,13 @@ const StoreContainer: FC<IStoreContainer> = ({
             </h3>
 
             <div className="popupContainer--storesList-storeContainer-storeContent-actions--buttons">
-              <a
-                href={admin}
+              <button
+                onClick={(): void => handleAdmin()}
                 type="button"
                 className="popupContainer--storesList-storeContainer-storeContent-actions--buttons-admin"
               >
                 Admin
-              </a>
+              </button>
               <button
                 onClick={(): void => handleCreateRule(storeID)}
                 type="button"
