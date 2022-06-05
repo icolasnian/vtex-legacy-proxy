@@ -15,10 +15,6 @@ interface IProxy {
   enableIcon: (tabId: number) => void;
 }
 
-type Intercept = {redirectUrl: unknown};
-
-const SUCCESSFUL_REQUEST = 200;
-
 const proxy: IProxy = {
   rules: [],
   filterStores(stores) {
