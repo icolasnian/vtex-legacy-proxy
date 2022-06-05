@@ -11,7 +11,7 @@
     
   },
   "description": "Proxy files from VTEX Stores.",
-  "homepage_url": "https://github.com/abhijithvijayan/web-extension-starter",
+  "homepage_url": "https://github.com/icolasnian/vtex-legacy-proxy",
   "short_name": "VTEX Legacy Proxy",
 
   "permissions": [

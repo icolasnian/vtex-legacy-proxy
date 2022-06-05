@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Proxy files from VTEX Stores.",
   "private": true,
-  "repository": "https://github.com/abhijithvijayan/web-extension-starter.git",
+  "repository": "https://github.com/icolasnian/vtex-legacy-proxy.git",
   "author": {
     "name": "Nícolas Ian",
     "email": "nicolasoliveeira@gmail.com"
