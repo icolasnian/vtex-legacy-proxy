@@ -78,6 +78,11 @@ const proxy: IProxy = {
 
       if (matchedRule) {
         proxy.enableIcon(tabId);
+
+        setTimeout(function () {
+          chrome.tabs.sendMessage(tabId, {name: proxy.rules[i].name});
+        }, 1500);
+
         return {redirectUrl: proxy.rules[i].urlTo};
       }
     }

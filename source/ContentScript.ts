@@ -1,17 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable func-names */
-// chrome.runtime.sendMessage({message: 'getdata'}, function (response) {
-//   const {data, origin} = response;
 
-//   const {urlFrom, urlTo} = data;
-
-//   if (window.location.origin === origin) {
-//     console.log(
-//       '%c Arquivo substituido! \n',
-//       'color: #bada55',
-//       `De: ${urlFrom} \n`,
-//       `Para: ${urlTo}`
-//     );
-//   }
-// });
-
-// export {};
+chrome.runtime.onMessage.addListener(function (request, sender) {
+  console.log(
+    `%cVTEX Legacy Proxy %c| Rule applied: %c${request.name}`,
+    'color: #e31c58;',
+    'color: #fffff;',
+    'color: #bada55;'
+  );
+});
