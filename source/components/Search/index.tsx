@@ -1,9 +1,9 @@
 import React, {FC, useContext} from 'react';
-import {StoresContext} from '../StoresContextProvider';
+import {ProxyContext} from '../ProxyContextProvider';
 import './styles.scss';
 
 const Search: FC = () => {
-  const {updateStoresToShow, stores} = useContext(StoresContext);
+  const {updateStoresToShow, stores} = useContext(ProxyContext);
 
   const handleUpdateStoresToShow = (searchQuery: string): void => {
     updateStoresToShow(searchQuery);

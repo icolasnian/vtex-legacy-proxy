@@ -1,20 +1,20 @@
 import React, {FC} from 'react';
 import Header from '../components/Header';
-import {StoresContextProvider} from '../components/StoresContextProvider';
+import {ProxyContextProvider} from '../components/ProxyContextProvider';
 import Search from '../components/Search';
 import CreateStoreModal from '../components/Modals/CreateStoreModal';
 import CreateRuleModal from '../components/Modals/CreateRuleModal';
 import UpdateRuleModal from '../components/Modals/UpdateRuleModal';
+import UpdateStoreModal from '../components/Modals/UpdateStoreModal';
 import StoresList from '../components/StoresList';
 
 import '../styles/_reset.scss';
 import '../styles/_fonts.scss';
 import './styles.scss';
-import UpdateStoreModal from '../components/Modals/UpdateStoreModal';
 
 const Popup: FC = () => {
   return (
-    <StoresContextProvider>
+    <ProxyContextProvider>
       <div className="popupContainer">
         <Header />
         <Search />
@@ -24,7 +24,7 @@ const Popup: FC = () => {
         <UpdateRuleModal />
         <UpdateStoreModal />
       </div>
-    </StoresContextProvider>
+    </ProxyContextProvider>
   );
 };
 

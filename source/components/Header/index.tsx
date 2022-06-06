@@ -1,12 +1,12 @@
 /* eslint-disable import/namespace */
 import React, {FC, useContext} from 'react';
 import {PlusIcon} from '../../utils/icons.util';
-import {StoresContext} from '../StoresContextProvider';
+import {ProxyContext} from '../ProxyContextProvider';
 
 import './styles.scss';
 
 const Header: FC = () => {
-  const {setShowCreateStoreModal} = useContext(StoresContext);
+  const {setShowCreateStoreModal} = useContext(ProxyContext);
 
   return (
     <header className="popupContainer-header">

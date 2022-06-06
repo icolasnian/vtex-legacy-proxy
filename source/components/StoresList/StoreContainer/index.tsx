@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {FC, useState, useContext} from 'react';
 import Toggle from '@atlaskit/toggle';
-import {StoresContext, IStore} from '../../StoresContextProvider';
+import {ProxyContext, IStore} from '../../ProxyContextProvider';
 import StoreRules from './StoreRules';
 import StoreTrigger from './StoreTrigger';
 import {ArrowIcon} from '../../../utils/icons.util';
@@ -26,7 +26,7 @@ const StoreContainer: FC<IStoreContainer> = ({
     setShowUpdateStoreModal,
     removeStore,
     updateStore,
-  } = useContext(StoresContext);
+  } = useContext(ProxyContext);
 
   const handleUpdateCurrentStoreInfo = (storeIndex: number): void => {
     updateCurrentStoreInfo(storeIndex);

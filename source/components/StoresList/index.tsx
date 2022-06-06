@@ -1,10 +1,10 @@
 import React, {FC, useContext} from 'react';
-import {StoresContext} from '../StoresContextProvider';
+import {ProxyContext} from '../ProxyContextProvider';
 import StoreContainer from './StoreContainer';
 import './styles.scss';
 
 const StoresList: FC = () => {
-  const {storesToShow} = useContext(StoresContext);
+  const {storesToShow} = useContext(ProxyContext);
 
   return (
     <div className="popupContainer-storesList">

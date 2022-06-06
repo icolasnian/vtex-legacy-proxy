@@ -3,13 +3,13 @@
 import React, {FC, useContext, useState, FormEvent} from 'react';
 import {Info} from '../../../utils/icons.util';
 import Overlay from '../../Overlay';
-import {StoresContext, IStore} from '../../StoresContextProvider';
+import {ProxyContext, IStore} from '../../ProxyContextProvider';
 
 import '../styles.scss';
 
 const CreateStoreModal: FC = () => {
   const {isCreateStoreModalOpen, createStore, setShowCreateStoreModal} =
-    useContext(StoresContext);
+    useContext(ProxyContext);
 
   const [createStoreData, setCreateStoreData] = useState<IStore>({
     vendor: '',

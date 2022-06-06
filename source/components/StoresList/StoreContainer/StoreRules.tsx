@@ -1,6 +1,6 @@
 import React, {FC, useContext} from 'react';
 import Toggle from '@atlaskit/toggle';
-import {IRule, StoresContext} from '../../StoresContextProvider';
+import {IRule, ProxyContext} from '../../ProxyContextProvider';
 import {EditRuleIcon, RemoveRuleIcon} from '../../../utils/icons.util';
 
 interface IStoreRules extends IRule {
@@ -21,7 +21,7 @@ const StoreRules: FC<IStoreRules> = ({
     removeRule,
     updateCurrentRuleInfo,
     setShowUpdateRuleModal,
-  } = useContext(StoresContext);
+  } = useContext(ProxyContext);
 
   const handleUpdateActiveRule = (): void => {
     updateRule(storeID, ruleID, {active: !active, name, urlFrom, urlTo});
