@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {FC, useContext, useState, FormEvent, useEffect} from 'react';
 import Overlay from '../../Overlay';
-import {StoresContext, IRule} from '../../StoresContextProvider';
+import {ProxyContext, IRule} from '../../ProxyContextProvider';
 
 import '../styles.scss';
 
@@ -11,7 +11,7 @@ const UpdateRuleModal: FC = () => {
     currentRuleInfo,
     updateRule,
     setShowUpdateRuleModal,
-  } = useContext(StoresContext);
+  } = useContext(ProxyContext);
 
   const {storeID, ruleID, rule} =
     (typeof currentRuleInfo !== 'undefined' && currentRuleInfo) || {};

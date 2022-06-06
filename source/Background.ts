@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-plusplus */
 /* eslint-disable func-names */
-import {IRule, IStore} from './components/StoresContextProvider';
+import {IRule, IStore} from './components/ProxyContextProvider';
 
 interface IProxy {
   rules: IRule[];
@@ -81,7 +81,7 @@ const proxy: IProxy = {
 
         setTimeout(function () {
           chrome.tabs.sendMessage(tabId, {name: proxy.rules[i].name});
-        }, 1500);
+        }, 2000);
 
         return {redirectUrl: proxy.rules[i].urlTo};
       }
@@ -102,15 +102,22 @@ const proxy: IProxy = {
   },
 };
 
-chrome.storage.local.get('stores', function (result) {
-  const stores = JSON.parse(result.stores);
-  if (stores) {
-    proxy.filterStores(stores);
+chrome.storage.local.get('proxyData', function (result) {
+  if (result && result.proxyData) {
+    console.log(result);
+    const proxyData = JSON.parse(result.proxyData);
+    const {stores} = proxyData;
+
+    if (stores) {
+      proxy.filterStores(stores);
+    }
   }
 });
 
 chrome.storage.onChanged.addListener(function (changes) {
-  const stores = JSON.parse(changes.stores.newValue);
+  proxy.killListener();
+  const proxyData = JSON.parse(changes.proxyData.newValue);
+  const {stores} = proxyData;
   if (stores) {
     proxy.filterStores(stores);
   }

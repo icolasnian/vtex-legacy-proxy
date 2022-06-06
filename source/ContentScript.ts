@@ -8,4 +8,6 @@ chrome.runtime.onMessage.addListener(function (request) {
     'color: #fffff;',
     'color: #bada55;'
   );
+
+  return true;
 });

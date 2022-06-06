@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {FC, useContext, useState, FormEvent} from 'react';
 import Overlay from '../../Overlay';
-import {StoresContext, IRule} from '../../StoresContextProvider';
+import {ProxyContext, IRule} from '../../ProxyContextProvider';
 import {Info} from '../../../utils/icons.util';
 import '../styles.scss';
 
@@ -11,7 +11,7 @@ const CreateRuleModal: FC = () => {
     currentStoreInfo,
     createRule,
     setShowCreateRuleModal,
-  } = useContext(StoresContext);
+  } = useContext(ProxyContext);
 
   const {storeID} = currentStoreInfo;
 

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {FC, useContext} from 'react';
 import {Portal} from 'react-portal';
-import {StoresContext} from '../StoresContextProvider';
+import {ProxyContext} from '../ProxyContextProvider';
 
 import './styles.scss';
 
@@ -15,7 +15,7 @@ const Overlay: FC<IOverlay> = ({children}: IOverlay) => {
     setShowCreateRuleModal,
     setShowUpdateStoreModal,
     setShowUpdateRuleModal,
-  } = useContext(StoresContext);
+  } = useContext(ProxyContext);
 
   const handleCloseModals = (): void => {
     setShowCreateStoreModal(false);
