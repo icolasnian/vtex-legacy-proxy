@@ -103,8 +103,7 @@ const proxy: IProxy = {
 };
 
 chrome.storage.local.get('proxyData', function (result) {
-  if (result && result.proxyData) {
-    console.log(result);
+  if (result && result.proxyData && result.proxyData !== '') {
     const proxyData = JSON.parse(result.proxyData);
     const {stores} = proxyData;
 
