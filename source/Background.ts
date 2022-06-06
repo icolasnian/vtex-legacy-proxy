@@ -67,7 +67,7 @@ const proxy: IProxy = {
   },
 
   enableIcon(tabId): void {
-    chrome.browserAction.setIcon({tabId, path: 'assets/icons/16-color.png'});
+    chrome.action.setIcon({tabId, path: '/assets/icons/16-color.png'});
   },
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- chrome methods expects different types for the same function
@@ -77,7 +77,7 @@ const proxy: IProxy = {
       const matchedRule = details.url.includes(proxy.rules[i].urlFrom);
 
       if (matchedRule) {
-        proxy.enableIcon(tabId);
+        // proxy.enableIcon(tabId);
 
         setTimeout(function () {
           chrome.tabs.sendMessage(tabId, {name: proxy.rules[i].name});
@@ -96,8 +96,7 @@ const proxy: IProxy = {
       {
         urls: ['<all_urls>'],
         types: ['main_frame', 'script', 'stylesheet'],
-      },
-      ['blocking']
+      }
     );
   },
 };
