@@ -15,12 +15,10 @@
   "short_name": "VTEX Legacy Proxy",
 
   "permissions": [
-    "activeTab",
     "webRequest",
     "webRequestBlocking",
     "storage",
     "tabs",
-    "webNavigation",
     "http://*/*",
     "https://*/*"
   ],
