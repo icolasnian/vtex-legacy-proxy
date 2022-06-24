@@ -15,7 +15,6 @@
   "short_name": "VTEX Legacy Proxy",
 
   "permissions": [
-    "activeTab",
     "storage",
     "tabs",
     "declarativeNetRequest",
