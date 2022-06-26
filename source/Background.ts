@@ -3,7 +3,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-plusplus */
 /* eslint-disable func-names */
-// @ts-nocheck
 import {IRule, IStore} from './components/ProxyContextProvider';
 
 interface IProxy {
@@ -12,10 +11,7 @@ interface IProxy {
   filterRules: (stores: IStore[]) => void;
   killListener: () => void;
   initListener: () => void;
-  intercept: (
-    details: chrome.webRequest.WebRequestBodyDetails
-  ) => {redirectUrl: string} | undefined;
-  enableIcon: (tabId: number) => void;
+  activateIcon: (tabId: number) => void;
 }
 
 const proxy: IProxy = {
@@ -62,45 +58,33 @@ const proxy: IProxy = {
 
   killListener(): void {
     proxy.rules = [];
-    chrome.webRequest.onBeforeRequest.removeListener(
-      proxy.intercept as (
-        details: chrome.webRequest.WebRequestBodyDetails
-      ) => void | chrome.webRequest.BlockingResponse
-    );
   },
 
-  enableIcon(tabId): void {
+  activateIcon(tabId): void {
     chrome.action.setIcon({tabId, path: '/assets/icons/16-color.png'});
   },
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- chrome methods expects different types for the same function
-  intercept(details: chrome.webRequest.WebRequestBodyDetails): any {
-    const {tabId} = details;
-    for (let i = 0; i < proxy.rules.length; i++) {
-      const matchedRule = details.url.includes(proxy.rules[i].urlFrom);
-
-      if (matchedRule) {
-        // proxy.enableIcon(tabId);
-
-        setTimeout(function () {
-          chrome.tabs.sendMessage(tabId, {name: proxy.rules[i].name});
-        }, 2000);
-
-        return {redirectUrl: proxy.rules[i].urlTo};
-      }
-    }
-  },
-
   initListener() {
-    chrome.webRequest.onBeforeRequest.addListener(
-      proxy.intercept as (
-        details: chrome.webRequest.WebRequestBodyDetails
-      ) => void | chrome.webRequest.BlockingResponse,
-      {
-        urls: ['<all_urls>'],
-        types: ['main_frame', 'script', 'stylesheet'],
-      }
-    );
+    const rulesWithId = proxy.rules.map((rule, ruleID) => {
+      return {...rule, id: ruleID + 1};
+    });
+
+    const formattedRules = rulesWithId.map((rule) => {
+      // @ts-expect-error
+      delete rule.name;
+      // @ts-expect-error
+      delete rule.active;
+
+      return {...rule};
+    });
+
+    const allRulesIDs = formattedRules.map((rule) => rule.id);
+
+    chrome.declarativeNetRequest.updateDynamicRules({
+      // @ts-expect-error
+      addRules: formattedRules,
+      removeRuleIds: allRulesIDs,
+    });
   },
 };
 
@@ -110,54 +94,38 @@ chrome.storage.local.get('proxyData', function (result) {
     const {stores} = proxyData;
 
     if (stores) {
-      // proxy.filterStores(stores);
-      console.log(stores);
+      proxy.filterStores(stores);
     }
   }
 });
 
 chrome.storage.onChanged.addListener(function (changes) {
-  // proxy.killListener();
   const proxyData = JSON.parse(changes.proxyData.newValue);
   const {stores} = proxyData;
   if (stores) {
-    console.log(stores);
-    // proxy.filterStores(stores);
+    proxy.filterStores(stores);
   }
 });
 
-// // chrome.declarativeNetRequest.updateDynamicRules({
-// //   addRules: [
-// //     {
-// //       id: 1001,
-// //       priority: 1,
-// //       action: {
-// //         type: 'redirect',
-// //         redirect: {
-// //           url: 'https://www.google.com',
-// //         },
-// //       },
-// //       condition: {
-// //         urlFilter: 'https://www.twitter.com',
-// //         resourceTypes: [
-// //           'csp_report',
-// //           'font',
-// //           'image',
-// //           'main_frame',
-// //           'media',
-// //           'object',
-// //           'other',
-// //           'ping',
-// //           'script',
-// //           'stylesheet',
-// //           'sub_frame',
-// //           'webbundle',
-// //           'websocket',
-// //           'webtransport',
-// //           'xmlhttprequest',
-// //         ],
-// //       },
-// //     },
-// //   ],
-// //   removeRuleIds: [1001],
-// // });
+chrome.tabs.onUpdated.addListener(function (tabId, info) {
+  if (info.status === 'complete' && proxy.rules.length > 0) {
+    chrome.declarativeNetRequest.getMatchedRules({tabId}, function (data) {
+      if (data.rulesMatchedInfo.length > 0) {
+        proxy.activateIcon(tabId);
+        const activeRules = data.rulesMatchedInfo;
+
+        for (let i = 0; i < activeRules.length; i++) {
+          /**
+           * Active rules ids aren't the same as proxy.rules ids,
+           * chrome doesn't accept id = 0
+           */
+          const activeRuleId = activeRules[i].rule.ruleId;
+
+          const ruleName = proxy.rules[activeRuleId - 1].name;
+
+          chrome.tabs.sendMessage(tabId, {name: ruleName});
+        }
+      }
+    });
+  }
+});
