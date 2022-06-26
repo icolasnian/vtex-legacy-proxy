@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable consistent-return */
 /* eslint-disable no-plusplus */
 /* eslint-disable func-names */
+// @ts-nocheck
 import {IRule, IStore} from './components/ProxyContextProvider';
 
 interface IProxy {
@@ -107,16 +110,54 @@ chrome.storage.local.get('proxyData', function (result) {
     const {stores} = proxyData;
 
     if (stores) {
-      proxy.filterStores(stores);
+      // proxy.filterStores(stores);
+      console.log(stores);
     }
   }
 });
 
 chrome.storage.onChanged.addListener(function (changes) {
-  proxy.killListener();
+  // proxy.killListener();
   const proxyData = JSON.parse(changes.proxyData.newValue);
   const {stores} = proxyData;
   if (stores) {
-    proxy.filterStores(stores);
+    console.log(stores);
+    // proxy.filterStores(stores);
   }
 });
+
+// // chrome.declarativeNetRequest.updateDynamicRules({
+// //   addRules: [
+// //     {
+// //       id: 1001,
+// //       priority: 1,
+// //       action: {
+// //         type: 'redirect',
+// //         redirect: {
+// //           url: 'https://www.google.com',
+// //         },
+// //       },
+// //       condition: {
+// //         urlFilter: 'https://www.twitter.com',
+// //         resourceTypes: [
+// //           'csp_report',
+// //           'font',
+// //           'image',
+// //           'main_frame',
+// //           'media',
+// //           'object',
+// //           'other',
+// //           'ping',
+// //           'script',
+// //           'stylesheet',
+// //           'sub_frame',
+// //           'webbundle',
+// //           'websocket',
+// //           'webtransport',
+// //           'xmlhttprequest',
+// //         ],
+// //       },
+// //     },
+// //   ],
+// //   removeRuleIds: [1001],
+// // });

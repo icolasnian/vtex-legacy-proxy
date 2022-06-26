@@ -8,6 +8,7 @@
 			"dom.iterable",
 			"esnext"
 		],
+		"types": ["chrome"],
 		"declaration": false,
 		"isolatedModules": false,
 		/* Additional Checks */
@@ -19,6 +20,7 @@
 	},
 	"include": [
 		"source",
+		"node_nodules",
 		"webpack.config.js"
 , "views/index.ts"	]
 }
