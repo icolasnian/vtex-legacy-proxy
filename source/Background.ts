@@ -58,6 +58,14 @@ const proxy: IProxy = {
 
   killListener(): void {
     proxy.rules = [];
+    chrome.declarativeNetRequest.getDynamicRules((previousRules) => {
+      const previousRuleIds = previousRules.map((rule) => rule.id);
+      chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: previousRuleIds,
+
+        addRules: [],
+      });
+    });
   },
 
   activateIcon(tabId): void {
@@ -78,12 +86,13 @@ const proxy: IProxy = {
       return {...rule};
     });
 
-    const allRulesIDs = formattedRules.map((rule) => rule.id);
-
-    chrome.declarativeNetRequest.updateDynamicRules({
-      // @ts-expect-error
-      addRules: formattedRules,
-      removeRuleIds: allRulesIDs,
+    chrome.declarativeNetRequest.getDynamicRules((previousRules) => {
+      const previousRuleIds = previousRules.map((rule) => rule.id);
+      chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: previousRuleIds,
+        // @ts-expect-error
+        addRules: formattedRules,
+      });
     });
   },
 };
@@ -113,6 +122,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, info) {
       if (data.rulesMatchedInfo.length > 0) {
         proxy.activateIcon(tabId);
         const activeRules = data.rulesMatchedInfo;
+
+        console.log('regras ativas', activeRules);
 
         for (let i = 0; i < activeRules.length; i++) {
           /**
