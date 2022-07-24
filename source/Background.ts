@@ -123,8 +123,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, info) {
         proxy.activateIcon(tabId);
         const activeRules = data.rulesMatchedInfo;
 
-        console.log('regras ativas', activeRules);
-
         for (let i = 0; i < activeRules.length; i++) {
           /**
            * Active rules ids aren't the same as proxy.rules ids,
