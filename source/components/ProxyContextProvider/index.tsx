@@ -2,11 +2,26 @@ import React, {FC, createContext, useEffect, useState, ReactNode} from 'react';
 // eslint-disable-next-line import/no-cycle
 import {setLocalStorage, readLocalStorage} from '../../utils/storage.util';
 
+export interface RuleRedirect {
+  url: string;
+}
+
+export interface RuleAction {
+  type: string;
+  redirect: RuleRedirect;
+}
+
+interface RuleCondition {
+  urlFilter: string;
+  resourceTypes: string[];
+}
+
 export interface IRule {
+  priority: number;
+  action: RuleAction;
   active: boolean;
+  condition: RuleCondition;
   name: string;
-  urlFrom: string;
-  urlTo: string;
 }
 
 export interface IStore {
@@ -53,7 +68,7 @@ interface IProxyContext extends IProxyData {
   updateRule: (
     storeID: number,
     ruleID: number,
-    {active, urlFrom, urlTo}: IRule
+    {active, name, action, condition, priority}: IRule
   ) => void;
   setShowCreateStoreModal: (condition: boolean) => void;
   setShowUpdateStoreModal: (condition: boolean) => void;
@@ -174,7 +189,7 @@ const ProxyContextProvider: FC<IProxyContextProvider> = ({children}) => {
   const updateRule = (
     storeID: number,
     ruleID: number,
-    {active, name, urlFrom, urlTo}: IRule
+    {active, name, action, condition, priority}: IRule
   ): void => {
     setProxyData((previousProxyData) => ({
       ...previousProxyData,
@@ -190,8 +205,9 @@ const ProxyContextProvider: FC<IProxyContextProvider> = ({children}) => {
                           ...rule,
                           name,
                           active,
-                          urlFrom,
-                          urlTo,
+                          action,
+                          condition,
+                          priority,
                         }
                       : rule;
                   }),

@@ -11,8 +11,9 @@ interface IStoreRules extends IRule {
 const StoreRules: FC<IStoreRules> = ({
   storeID,
   ruleID,
-  urlFrom,
-  urlTo,
+  action,
+  condition,
+  priority,
   active,
   name,
 }: IStoreRules) => {
@@ -24,7 +25,13 @@ const StoreRules: FC<IStoreRules> = ({
   } = useContext(ProxyContext);
 
   const handleUpdateActiveRule = (): void => {
-    updateRule(storeID, ruleID, {active: !active, name, urlFrom, urlTo});
+    updateRule(storeID, ruleID, {
+      active: !active,
+      name,
+      action,
+      condition,
+      priority,
+    });
   };
 
   const handleRemoveRule = (): void => {

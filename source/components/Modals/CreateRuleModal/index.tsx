@@ -3,6 +3,7 @@ import React, {FC, useContext, useState, FormEvent} from 'react';
 import Overlay from '../../Overlay';
 import {ProxyContext, IRule} from '../../ProxyContextProvider';
 import {Info} from '../../../utils/icons.util';
+
 import '../styles.scss';
 
 const CreateRuleModal: FC = () => {
@@ -16,9 +17,19 @@ const CreateRuleModal: FC = () => {
   const {storeID} = currentStoreInfo;
 
   const [createRuleData, setCreateRuleData] = useState<IRule>({
-    active: false,
-    urlFrom: '',
-    urlTo: '',
+    name: '',
+    priority: 1,
+    action: {
+      type: 'redirect',
+      redirect: {
+        url: '',
+      },
+    },
+    condition: {
+      urlFilter: '',
+      resourceTypes: ['main_frame', 'stylesheet', 'script'],
+    },
+    active: true,
   } as IRule);
 
   const handleCreateRule = (
@@ -86,7 +97,10 @@ const CreateRuleModal: FC = () => {
                     onChange={(e): void =>
                       setCreateRuleData((previousRuleData) => ({
                         ...previousRuleData,
-                        urlFrom: e.target.value,
+                        condition: {
+                          ...previousRuleData.condition,
+                          urlFilter: e.target.value,
+                        },
                       }))
                     }
                     className="modal-formContainer_form-inputContainer--input"
@@ -113,7 +127,12 @@ const CreateRuleModal: FC = () => {
                     onChange={(e): void =>
                       setCreateRuleData((previousRuleData) => ({
                         ...previousRuleData,
-                        urlTo: e.target.value,
+                        action: {
+                          ...previousRuleData.action,
+                          redirect: {
+                            url: e.target.value,
+                          },
+                        },
                       }))
                     }
                     className="modal-formContainer_form-inputContainer--input"

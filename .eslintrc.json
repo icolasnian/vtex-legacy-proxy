@@ -29,7 +29,12 @@
 	"settings": {
 		"node": {
 			"tryExtensions": [".tsx"] // append tsx to the list as well
-		}
+		},
+		"import/resolver": {
+			"node": {
+			  "extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		  }
 	},
 	"ignorePatterns": [
 		"node_modules/",

@@ -124,10 +124,11 @@ const StoreContainer: FC<IStoreContainer> = ({
                 rules.map((rule, ruleID) => (
                   <StoreRules
                     storeID={storeID}
-                    key={rule.urlFrom}
+                    key={rule.name}
                     ruleID={ruleID}
-                    urlFrom={rule.urlFrom}
-                    urlTo={rule.urlTo}
+                    action={rule.action}
+                    priority={rule.priority}
+                    condition={rule.condition}
                     active={rule.active}
                     name={rule.name}
                   />

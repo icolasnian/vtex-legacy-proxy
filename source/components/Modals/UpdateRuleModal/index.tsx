@@ -81,11 +81,14 @@ const UpdateRuleModal: FC = () => {
                     Url from:
                   </label>
                   <input
-                    defaultValue={rule?.urlFrom}
+                    defaultValue={rule?.condition.urlFilter}
                     onChange={(e): void =>
                       setUpdateRuleData((previousRuleData) => ({
                         ...previousRuleData,
-                        urlFrom: e.target.value,
+                        condition: {
+                          ...previousRuleData.condition,
+                          urlFilter: e.target.value,
+                        },
                       }))
                     }
                     className="modal-formContainer_form-inputContainer--input"
@@ -103,11 +106,16 @@ const UpdateRuleModal: FC = () => {
                     Url to:
                   </label>
                   <input
-                    defaultValue={rule?.urlTo}
+                    defaultValue={rule?.action.redirect.url}
                     onChange={(e): void =>
                       setUpdateRuleData((previousRuleData) => ({
                         ...previousRuleData,
-                        urlTo: e.target.value,
+                        action: {
+                          ...previousRuleData.action,
+                          redirect: {
+                            url: e.target.value,
+                          },
+                        },
                       }))
                     }
                     className="modal-formContainer_form-inputContainer--input"
