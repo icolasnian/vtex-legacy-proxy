@@ -4,11 +4,10 @@
   "version": "0.0.0",
 
   "icons": {
-    "16": "assets/icons/16-grey.png",
-    "32": "assets/icons/32-grey.png",
-    "48": "assets/icons/48-grey.png",
-    "128": "assets/icons/128-grey.png"
-    
+    "16": "assets/icons/16-color.png",
+    "32": "assets/icons/32-color.png",
+    "48": "assets/icons/48-color.png",
+    "128": "assets/icons/128-color.png"
   },
   "description": "Proxy files from VTEX Stores.",
   "homepage_url": "https://github.com/icolasnian/vtex-legacy-proxy",
